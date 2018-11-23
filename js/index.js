@@ -5,18 +5,26 @@
         .module('Repositories')
         .controller('RepositoriesCtrl', function($scope, $http) {
             $scope.repositories;
+            
+            // $http({
+            //     method: 'GET',
+            //     url: 'https://github.com/login/oauth/authorize?client_id=Iv1.f97764743ca89b4c'
+            // }).then(function(response) {
+            //     console.log(response);
+            // });
 
+            // get public repositories
             $http({
                 method: 'GET',
-                url: 'https://api.github.com/repositories' 
+                url: 'https://api.github.com/repositories?client_id=Iv1.f97764743ca89b4c' 
             }).then(function(response) {
                 let repositories = response.data;
-                $scope.repositories = repositories;
 
                 for (let repository of repositories) {
+                    // get events of each repository
                     $http({
                         method: 'GET',
-                        url: repository.events_url
+                        url: repository.events_url + '?client_id=Iv1.f97764743ca89b4c'
                     }).then(function(events) {
                         // filter events by type and by time of creation 
                         let watchEvents = events.filter(function(event) {
@@ -26,8 +34,8 @@
                         repository.numberOfStarsToday = watchEvents.length;
                     });
                 }
+                // add repositories to scope 
+                $scope.repositories = repositories;
             });
-
         });
-
 }());
