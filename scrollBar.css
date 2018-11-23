@@ -1,0 +1,22 @@
+*::-webkit-scrollbar {
+    width: 10px; 
+    opacity: 0.35;
+	-webkit-transition: all 0.35s;
+	-moz-transition: all 0.35s;
+	-ms-transition: all 0.35s;
+	-o-transition: all 0.35s;
+	transition: all 0.35s;
+}
+*::-webkit-scrollbar:hover {
+	width: 20px;
+	opacity: 1;
+}
+*::-webkit-scrollbar:hover *::-webkit-scrollbar-thumb {
+    background: #69F0AE;
+}
+*::-webkit-scrollbar-track {
+	background-color: #000; 
+} 
+*::-webkit-scrollbar-thumb {
+	background: #69F0AE;
+}  

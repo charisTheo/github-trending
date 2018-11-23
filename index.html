@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#24292e">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0 , maximum-scale=1.0">
+  <meta name="author" content="www.github.com/charisTheo">
+
+  <title>Github Trending Repos</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Michroma" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+
+  <link rel="stylesheet" href="./scrollBar.css" type="text/css">
+  <link rel="stylesheet" href="./styles.css" type="text/css">
+
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.js"></script>
+</head>
+
+<body ng-app="Repositories" ng-controller="RepositoriesCtrl">
+
+
+  <!---------- TOP BAR MENU ----------->
+  <md-toolbar class="md-primary md-padding">
+    <div class="md-toolbar-tools">
+       <h4 md-colors="{color: 'accent'}"> Github Trending Repositories </h4>
+    </div>
+  </md-toolbar>    
+  <!---------- end of TOP BAR MENU ----------->
+
+
+  <main>
+    <div class="container">
+
+    <!---------- SEARCH FILTERS INPUT ----------->
+      <div layout="row" class="filters" layout-align="center center">
+        <md-input-container class="search-term">
+          <label>Search repos</label>
+          <input type="text" ng-model="searchFilter">
+        </md-input-container>
+        <md-input-container>
+          <md-button class="md-warn" ng-click="searchFilter = ''">
+            clear
+          </md-button>
+        </md-input-container>
+      </div>
+    <!---------- end of SEARCH FILTERS INPUT ----------->
+
+
+      <md-content 
+        id="repos" 
+        class="md-padding"
+        layout-wrap
+        layout="row"
+        layout-xs="column"
+      >
+        <!---------- CARDS ----------->
+        <md-card 
+          md-theme="{{'default'}}" 
+          md-theme-watch
+          class="card"
+          ng-repeat="repo in repositories | filter: searchFilter | orderBy: numberOfStarsToday"
+          flex-gt-sm="30"
+          flex-sm="45"
+          >
+
+          <img ng-src="{{ repo.owner.avatar_url }}" class="md-card-image" alt="Repository image">
+          
+          <md-card-title>
+            <md-card-title-text>
+              <md-button class="md-button md-primary" ng-href="{{ repo.html_url }}">
+                {{ repo.full_name }}
+              </md-button>
+            </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              {{ repo.description }}
+            </md-card-content>
+
+            <md-card-content>
+                <md-content class="md-padding">
+                  <md-subheader class="md-no-sticky">{{ repo.name }}</md-subheader>
+                </md-content>
+            </md-card-content>
+
+            <md-card-actions layout="row" layout-align="center center">
+                <!-- Github Buttons -->
+                <md-button class="md-icon-button" ng-href="{{ repo.html_url }}">
+                  <i class="material-icons" aria-label="Star {{ repo.name }} on GitHub">star_border</i>
+                </md-button>
+                <!-- <md-button class="md-icon-button" ng-href="{{ repo.subscription_url }}">
+                  <i class="material-icons" aria-label="Watch {{ repo.name }} on GitHub">remove_red_eye</i>
+                </md-button> -->
+                <md-button class="md-icon-button" ng-href="{{ repo.forks_url }}">
+                  <i class="material-icons" aria-label="Fork {{ repo.name }} on GitHub">call_split</i>
+                </md-button>
+              </md-card-actions>
+          </md-card>
+
+
+      </md-content>
+  </main>
+
+  <!-- Custom JS file -->
+  <script src="./app.js"></script>
+  <script src="./index.js"></script>
+
+</body>
+
+</html>
